@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>
+      AdonisJS - A fully featured web framework for Node.js
+    </title>
+    @vite(['resources/css/app.css'])
+  </head>
+  <body class="flex items-center justify-center h-screen flex-col">
+    <h1 class="text-6xl font-bold text-center">
+      Login Page
+    </h1>
+    <form
+        class="flex flex-col gap-4 bg-white p-8 rounded shadow-md"
+        method="POST" >
+        <input
+            class="border border-gray-300 p-2 rounded"
+            type="text"
+            name="username"
+            placeholder="Username"
+            required />
+        <input
+            class="border border-gray-300 p-2 rounded"
+            type="password"
+            name="password"
+            placeholder="Password"
+            required />
+        <button
+            class="bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
+            formaction="/login"
+            type="submit">
+            Login
+        </button>
+        <button
+            class="bg-gray-500 text-white p-2 rounded hover:bg-gray-600"
+            formaction="/register"
+            type="submit">
+            Register
+        </button>
+    </form>
+  </body>
+</html>

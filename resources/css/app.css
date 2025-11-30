@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 @source "../views";
 
 html,
@@ -7,5 +7,23 @@ body {
   width: 100%;
   font-family: Inter, sans-serif;
 
-  background-color: #F8F7F4;
+  background-color: #f8f7f4;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  letter-spacing: -0.018em;
+}
+.stack-sans-headline {
+  font-family: 'Stack Sans Headline', sans-serif;
+  font-optical-sizing: auto;
+}
+
+.button-link {
+  @apply bg-[#F7E2A4] text-black px-5 py-2 font-semibold text-sm rounded-lg tracking-tight cursor-pointer;
+  @apply hover:bg-[#E6CE7C] transition-colors duration-200;
 }

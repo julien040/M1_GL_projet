@@ -1,0 +1,13 @@
+@layout.app({ title: "Accueil" })
+  @slot('meta')
+    <meta name="description" content="Indirent - Petites annonces entre particulier" />
+  @endslot
+  @slot('main')
+    <main>
+      <h1 class="text-2xl stack-sans-headline mt-10">
+        Bienvenue sur votre dashboard, {{ auth.user.fullName  }} !
+      </h1>
+    </main>
+  @endslot
+@end
+

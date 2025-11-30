@@ -1,0 +1,84 @@
+@layout.app({ title: "S'enregistrer" })
+  @slot('meta')
+    <meta name="description" content="Indirent - Petites annonces entre particulier" />
+  @endslot
+  @slot('main')
+    <main class="max-w-sm mx-auto mt-10">
+      @if(error)
+        <div class="block bg-red-500 text-white px-4 py-3 rounded-md mb-6" role="alert">
+          <p class="font-semibold text-base">
+            Erreur !
+          </p>
+          <p class="text-sm text-white/80">
+            {{ error }}
+          </p>
+        </div>
+      @end
+      <form action="/register" method="POST" class="rounded-md bg-white px-8 pt-6 pb-8 mb-4">
+        {{ csrfField() }}
+        <img src="/resources/images/logo-indirent.png" alt="Logo Indirent" class="w-20 mx-auto mb-3" />
+        <h1 class="text-xl mb-6 text-center stack-sans-headline">
+          S'enregistrer
+        </h1>
+        <div class="mb-8 flex flex-col">
+          <label class="text-sm font-semibold" for="fullname">
+            Prénom et nom
+          </label>
+          <label class="text-black/60 text-xs font-medium mb-2" for="fullname">
+            Veillez à bien utiliser votre vrai nom
+          </label>
+          <input
+            class="bg-gray-100 focus:bg-gray-200 rounded-md outline-none px-3 py-2 text-[14px]"
+            id="fullname"
+            type="text"
+            name="fullname"
+            placeholder="Michel Duras"
+            required
+            pattern="[A-Za-zÀ-ÖØ-öø-ÿ '-]+"
+          />
+        </div>
+        <div class="mb-8 flex flex-col">
+          <label class="text-sm font-semibold" for="email">
+            Adresse e-mail
+          </label>
+          <label class="text-black/60 text-xs font-medium mb-2" for="email">
+            Attention à la casse
+          </label>
+          <input
+            class="bg-gray-100 focus:bg-gray-200 rounded-md outline-none px-3 py-2 text-[14px]"
+            id="email"
+            type="email"
+            name="email"
+            placeholder="michel.duras@example.com"
+            required
+          />
+        </div>
+        <div class="mb-6 flex flex-col">
+          <label class="text-sm font-semibold" for="password">
+            Mot de passe
+          </label>
+          <label class="text-black/60 text-xs font-medium mb-2" for="password">
+            8 caractères minimum
+          </label>
+          <input
+            class="bg-gray-100 focus:bg-gray-200 rounded-md outline-none px-3 py-2 text-[14px]"
+            id="password"
+            type="password"
+            name="password"
+            placeholder="******************"
+            required
+            minlength="8"
+          />
+        </div>
+
+        <button class="button-link w-full" type="submit">
+          S'enregistrer
+          </button>
+        <a href="/login" class="block mt-2 text-xs text-black/60 hover:underline">
+          Vous possédez déjà un compte ? Connectez-vous ici.
+          </a>
+      </form>
+
+    </main>
+  @endslot
+@end

@@ -1,0 +1,152 @@
+@layout.app({ title: "Créer une annonce" })
+  @slot('meta')
+    <meta name="description" content="Indirent - Petites annonces entre particulier" />
+  @endslot
+  @slot('main')
+    <main class="mt-10">
+      @if(error)
+        <div class="block bg-red-500 text-white px-4 py-3 rounded-md mb-6" role="alert">
+          <p class="font-semibold text-base">
+            Erreur !
+          </p>
+          <p class="text-sm text-white/80">
+            {{ error }}
+          </p>
+        </div>
+      @end
+      <h1 class="text-2xl stack-sans-headline">
+        Créer une nouvelle annonce
+      </h1>
+      <p class="text-black/60 text-sm mb-8">
+        Remplissez le formulaire ci-dessous pour créer une nouvelle annonce. Plus vous fournissez de détails, plus votre annonce aura de chances d'attirer l'attention !
+      </p>
+      <form action="/new" method="POST" class="rounded-md" enctype="multipart/form-data">
+        {{ csrfField() }}
+        <div class="flex flex-col">
+          <label class="text-sm font-semibold mb-2" for="type">
+            Type d'annonce
+            </label>
+          <select
+            id="type"
+            name="type"
+            class="text-sm max-w-32 font-normal border-b-2 border-black/10 mb-6 p-1 focus:outline-none focus:border-black/40"
+          >
+            <option value="bien">
+              Bien
+            </option>
+            <option value="service">
+              Compétence
+            </option>
+          </select>
+        </div>
+
+        <div class="flex flex-col">
+          <label class="text-sm font-semibold mb-2" for="nom">
+            Titre de l'annonce
+            </label>
+          <input
+            class="border-b-2 border-black/10 mb-6 p-1 focus:outline-none focus:border-black/40 max-w-md text-sm font-normal"
+            id="title"
+            type="text"
+            name="title"
+            placeholder="Par exemple : Perceuse électrique Bosch"
+            required
+          />
+        </div>
+
+        <div class="flex flex-col">
+          <label class="text-sm font-semibold mb-2" for="description">
+            Description
+            </label>
+          <textarea
+            class="border-b-2 border-black/10 mb-6 p-1 focus:outline-none focus:border-black/40 max-w-2xl h-36 text-sm font-normal"
+            id="description"
+            name="description"
+            placeholder="Décrivez votre bien ou compétence en détail"
+            required
+          ></textarea>
+        </div>
+
+        <div class="flex gap-4">
+          <div class="flex flex-col">
+            <label class="text-sm font-semibold mb-2" for="prix">
+              Prix (€)
+                </label>
+            <input
+              class="border-b-2 border-black/10 mb-6 p-1 focus:outline-none focus:border-black/40 max-w-xs text-sm font-normal"
+              id="prix"
+              type="number"
+              name="prix"
+              placeholder="15"
+              required
+              min="0"
+              step="0.01"
+            />
+          </div>
+          <div class="flex flex-col">
+            <label class="text-sm font-semibold mb-2" for="duree">
+              Par
+                </label>
+            <select
+              id="duration"
+              name="duration"
+              class="text-sm max-w-sm font-normal border-b-2 border-black/10 mb-6 p-1 focus:outline-none focus:border-black/40"
+            >
+              <option value="heure">
+                Heure
+              </option>
+              <option value="jour">
+                Jour
+              </option>
+              <option value="semaine">
+                Semaine
+              </option>
+              <option value="mois">
+                Mois
+              </option>
+              <option value="unite">
+                Unité
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div class="flex flex-col">
+          <label class="text-sm font-semibold mb-2" for="location">
+            Emplacement
+            </label>
+          <input
+            class="border-b-2 border-black/10 mb-6 p-1 focus:outline-none focus:border-black/40 max-w-xs text-sm font-normal"
+            id="location"
+            type="text"
+            name="location"
+            placeholder="75000"
+            required
+            minlength="5"
+            maxlength="5"
+            pattern="\d{5}"
+          />
+        </div>
+
+        <div class="flex flex-col">
+          <label class="text-sm font-semibold mb-2" for="cover">
+            Photo de couverture
+            </label>
+          <input
+            class="border-b-2 border-black/10 mb-6 p-1 focus:outline-none focus:border-black/40 max-w-xs text-sm font-normal"
+            id="cover"
+            type="file"
+            name="cover"
+            required
+            accept="image/*"
+          />
+        </div>
+
+        <button class="button-link w-fit" type="submit">
+          Créer une annonce
+         </button>
+      </form>
+
+    </main>
+  @endslot
+@end

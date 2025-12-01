@@ -1,19 +1,24 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, hasOne } from '@adonisjs/lucid/orm'
-import type { HasOne } from '@adonisjs/lucid/types/relations'
+import { BaseModel, column, hasOne, belongsTo } from '@adonisjs/lucid/orm'
+import type { HasOne, BelongsTo } from '@adonisjs/lucid/types/relations'
 import User from './user.js'
 
 export default class Annonce extends BaseModel {
   @column({ isPrimary: true })
-  declare id: number
+  declare id: string
 
-  @hasOne(() => User)
-  declare author: HasOne<typeof User>
+  @column()
+  declare authorId: number
+
+  @belongsTo(() => User, {
+    foreignKey: 'authorId', // Pointing to the column you just added
+  })
+  declare author: BelongsTo<typeof User>
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
 
-  // ENUM heure/jour/mois/an
+  // ENUM heure/jour/mois/an/unite
   @column()
   declare durationType: string
 
@@ -36,6 +41,9 @@ export default class Annonce extends BaseModel {
   // Code postal
   @column()
   declare location: string
+
+  @column()
+  declare imagePath: string
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime

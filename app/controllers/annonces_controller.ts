@@ -69,4 +69,14 @@ export default class AnnoncesController {
 
     return response.redirect('/dashboard')
   }
+
+  async showAnnonce({ params, view, response }: HttpContext) {
+    const annonce = await Annonce.query().preload('author').where('id', params.id).first()
+
+    if (!annonce) {
+      return response.notFound('Annonce non trouvée')
+    }
+
+    return view.render('pages/annonce', { annonce })
+  }
 }

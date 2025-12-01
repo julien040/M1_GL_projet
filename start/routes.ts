@@ -16,6 +16,7 @@ router
   .use(middleware.auth())
 router.get('/new', '#controllers/annonces_controller.newPage').use(middleware.auth())
 router.post('/new', '#controllers/annonces_controller.createAnnonce').use(middleware.auth())
+router.get('/annonce/:id', '#controllers/annonces_controller.showAnnonce')
 
 const PATH_TRAVERSAL_REGEX = /(?:^|[\\/])\.\.(?:[\\/]|$)/
 

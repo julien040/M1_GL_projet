@@ -79,4 +79,48 @@ export default class AnnoncesController {
 
     return view.render('pages/annonce', { annonce })
   }
+
+  async search({ request, view }: HttpContext) {
+    // ?type=bien&description=aa&location=64000
+    const { type, description, location, sortBy } = request.qs()
+
+    let query = Annonce.query().preload('author').where('isActive', true)
+
+    if (type) {
+      query = query.where('category', type)
+    }
+
+    if (description) {
+      query = query.where('description', 'like', `%${description}%`)
+    }
+
+    if (location) {
+      query = query.where('location', location)
+    }
+
+    switch (sortBy) {
+      case 'price_asc':
+        query = query.orderBy('cost', 'asc')
+        break
+      case 'price_desc':
+        query = query.orderBy('cost', 'desc')
+        break
+      case 'newest':
+        query = query.orderBy('createdAt', 'desc')
+        break
+      case 'oldest':
+        query = query.orderBy('createdAt', 'asc')
+        break
+      default:
+        // No sorting
+        break
+    }
+
+    const annonces = await query.exec()
+
+    return view.render('pages/search_results', {
+      annonces,
+      searchParams: { type, description, location, sortBy: sortBy ? sortBy : 'price_asc' },
+    })
+  }
 }

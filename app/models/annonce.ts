@@ -1,7 +1,9 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, hasOne, belongsTo } from '@adonisjs/lucid/orm'
-import type { HasOne, BelongsTo } from '@adonisjs/lucid/types/relations'
+import { BaseModel, column, hasOne, belongsTo, hasMany } from '@adonisjs/lucid/orm'
+import type { HasOne, BelongsTo, HasMany } from '@adonisjs/lucid/types/relations'
 import User from './user.js'
+import Avis from './avis.js'
+import Message from './message.js'
 
 export default class Annonce extends BaseModel {
   @column({ isPrimary: true })
@@ -15,10 +17,20 @@ export default class Annonce extends BaseModel {
   })
   declare author: BelongsTo<typeof User>
 
+  @hasMany(() => Avis, {
+    foreignKey: 'annonceId',
+  })
+  declare avis: HasMany<typeof Avis>
+
+  @hasMany(() => Message, {
+    foreignKey: 'annonceId',
+  })
+  declare messages: HasMany<typeof Message>
+
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
 
-  // ENUM heure/jour/mois/an/unite
+  // ENUM heure/jour/mois/an/unite/echange
   @column()
   declare durationType: string
 
@@ -47,4 +59,6 @@ export default class Annonce extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime
+
+  declare averageRating: string
 }

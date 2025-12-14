@@ -2,6 +2,7 @@ import type { HttpContext } from '@adonisjs/core/http'
 import { cuid } from '@adonisjs/core/helpers'
 import app from '@adonisjs/core/services/app'
 import Annonce from '../models/annonce.js'
+import Avis from '../models/avis.js'
 
 export default class AnnoncesController {
   async newPage({ view }: HttpContext) {
@@ -71,10 +72,25 @@ export default class AnnoncesController {
   }
 
   async showAnnonce({ params, view, response }: HttpContext) {
-    const annonce = await Annonce.query().preload('author').where('id', params.id).first()
+    const annonce = await Annonce.query()
+      .preload('author')
+      .preload('avis', (qb) => {
+        qb.preload('user')
+      })
+      .where('id', params.id)
+      .first()
 
     if (!annonce) {
       return response.notFound('Annonce non trouvée')
+    }
+
+    // On calcule la note moyenne
+    const avisAnnonce = annonce.avis
+    if (avisAnnonce.length > 0) {
+      const totalNotes = avisAnnonce.reduce((sum, avis) => sum + avis.note, 0)
+      ;(annonce as any).averageRating = (totalNotes / avisAnnonce.length).toFixed(1).toString()
+    } else {
+      ;(annonce as any).averageRating = '?'
     }
 
     return view.render('pages/annonce', { annonce })
@@ -84,7 +100,12 @@ export default class AnnoncesController {
     // ?type=bien&description=aa&location=64000
     const { type, description, location, sortBy } = request.qs()
 
-    let query = Annonce.query().preload('author').where('isActive', true)
+    let query = Annonce.query()
+      .preload('author')
+      .preload('avis', (qb) => {
+        qb.preload('user')
+      })
+      .where('isActive', true)
 
     if (type) {
       query = query.where('category', type)
@@ -118,9 +139,49 @@ export default class AnnoncesController {
 
     const annonces = await query.exec()
 
+    for (const annonce of annonces) {
+      // On calcule la note moyenne
+      const avisAnnonce = annonce.avis
+      if (avisAnnonce.length > 0) {
+        const totalNotes = avisAnnonce.reduce((sum, avis) => sum + avis.note, 0)
+        ;(annonce as any).averageRating = (totalNotes / avisAnnonce.length).toFixed(1).toString()
+      } else {
+        ;(annonce as any).averageRating = '?'
+      }
+    }
+
     return view.render('pages/search_results', {
       annonces,
       searchParams: { type, description, location, sortBy: sortBy ? sortBy : 'price_asc' },
     })
+  }
+
+  async newReviewPage({ params, view, response, auth }: HttpContext) {
+    const annonce = await Annonce.query().where('id', params.id).first()
+
+    if (!annonce) {
+      return response.notFound('Annonce non trouvée')
+    }
+
+    return view.render('pages/new_review', { annonce })
+  }
+
+  async createReview({ params, request, response, auth }: HttpContext) {
+    const annonce = await Annonce.query().where('id', params.id).first()
+
+    if (!annonce) {
+      return response.notFound('Annonce non trouvée')
+    }
+
+    const { note, commentaire } = request.only(['note', 'commentaire'])
+
+    await Avis.create({
+      annonceId: annonce.id,
+      userId: auth.user!.id,
+      note,
+      commentaire,
+    })
+
+    return response.redirect(`/annonce/${annonce.id}`)
   }
 }

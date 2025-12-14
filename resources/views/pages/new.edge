@@ -68,7 +68,7 @@
         </div>
 
         <div class="flex gap-4">
-          <div class="flex flex-col">
+          <div id="prixInput" class="flex flex-col">
             <label class="text-sm font-semibold mb-2" for="prix">
               Prix (€)
                 </label>
@@ -106,6 +106,9 @@
               </option>
               <option value="unite">
                 Unité
+              </option>
+              <option value="echange">
+                Échange
               </option>
             </select>
           </div>
@@ -146,7 +149,21 @@
           Créer une annonce
          </button>
       </form>
+      <script>
+        const durationSelect = document.getElementById("duration");
 
+        const prixInput = document.getElementById("prixInput");
+
+        durationSelect.addEventListener("change", event => {
+          console.log("changed", event.target.value);
+          const selectedValue = event.target.value;
+          if (selectedValue === "echange") {
+            prixInput.style.display = "none";
+          } else {
+            prixInput.style.display = "flex";
+          }
+        });
+      </script>
     </main>
   @endslot
 @end

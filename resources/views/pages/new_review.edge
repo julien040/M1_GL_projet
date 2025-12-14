@@ -1,0 +1,56 @@
+@layout.app({ title: "Ajout d'un avis" })
+  @slot('meta')
+    <meta name="description" content="Indirent - Petites annonces entre particulier" />
+  @endslot
+  @slot('main')
+    <main>
+      <h1 class="text-2xl stack-sans-headline mt-10">
+        Ajouter un avis pour l'annonce : {{ annonce.title }}
+      </h1>
+      <p class="text-sm text-black/60">
+        Les avis aident les autres utilisateurs. Ils sont publics. Soyez honnête et constructif dans votre retour !
+      </p>
+
+      <form
+        action="/annonce/{{ annonce.id }}/newReview"
+        method="POST"
+        class="mt-6 flex flex-col gap-4 max-w-lg"
+      >
+        {{ csrfField() }}
+        <div class="flex flex-col">
+          <label for="note" class="text-sm font-semibold tracking-tight mb-1">
+            Note (sur 5)
+          </label>
+          <input
+            type="number"
+            id="note"
+            name="note"
+            min="1"
+            max="5"
+            step="0.1"
+            required
+            value="5"
+            class="text-sm font-normal border-b-2 border-black/10 py-1 focus:outline-none focus:border-black/40"
+          />
+        </div>
+
+        <div class="flex flex-col">
+          <label for="commentaire" class="text-sm font-semibold tracking-tight mb-1">
+            Commentaire
+          </label>
+          <textarea
+            id="commentaire"
+            name="commentaire"
+            rows="4"
+            class="text-sm font-normal border-b-2 border-black/10 py-1 focus:outline-none focus:border-black/40"
+          ></textarea>
+        </div>
+
+        <button type="submit" class="button-link w-fit mt-4">
+          Soumettre l'avis
+        </button>
+      </form>
+    </main>
+  @endslot
+@end
+  

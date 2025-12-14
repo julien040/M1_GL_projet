@@ -113,11 +113,11 @@ ${searchParams.description || ''} ${searchParams.location || ''}` : ''}` })
                   />
                 </svg>
                 <p class="text-xs font-medium ml-1">
-                  4.35
+                  {{ annonce.averageRating }}
                 </p>
 
                 <p class="text-xs font-light text-black/40 ml-2">
-                  13 avis
+                  {{ annonce.avis.length }} avis
                 </p>
               </div>
 

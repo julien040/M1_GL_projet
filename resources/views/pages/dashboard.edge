@@ -36,16 +36,20 @@
                 />
               </svg>
               <p class="text-xs font-medium ml-1">
-                4.35
+                {{ annonce.averageRating }}
               </p>
 
               <p class="text-xs font-light text-black/40 ml-2">
-                13 avis
+                {{ annonce.avis.length }} avis
               </p>
             </div>
 
             <p class="font-semibold mt-4  ">
-              {{ annonce.cost }} €/{{annonce.durationType}}
+              @if(annonce.durationType === 'echange')
+                Échange
+              @else
+                {{ annonce.cost }} €/{{annonce.durationType}}
+              @end
             </p>
             <div class="flex items-center mt-4">
               <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
@@ -74,9 +78,14 @@
         @end
         
       </div>
-      <a href="/new" class="block mt-8 button-link w-fit">
-        Créer une nouvelle annonce
-      </a>
+      <div class="flex gap-4">
+        <a href="/new" class="block mt-8 button-link w-fit">
+          Créer une nouvelle annonce
+        </a>
+        <a href="/logout" class="block mt-8 button-link w-fit">
+          Se déconnecter
+        </a>
+      </div>
     </main>
   @endslot
 @end

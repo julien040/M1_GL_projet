@@ -94,6 +94,10 @@ export default defineConfig({
       reloadServer: false,
     },
     {
+      pattern: 'resources/images/**',
+      reloadServer: false,
+    },
+    {
       pattern: 'public/**',
       reloadServer: false,
     },

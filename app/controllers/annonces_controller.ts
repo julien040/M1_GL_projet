@@ -49,7 +49,7 @@ export default class AnnoncesController {
     }
 
     const annonceID = cuid()
-    await cover.move(app.makePath('storage/uploads'), {
+    await cover.move('./storage/uploads', {
       name: `cover-${annonceID}-${cuid()}.${cover.extname}`,
     })
 

@@ -50,6 +50,6 @@ router.get('/uploads/*', ({ request, response }) => {
     return response.badRequest('Malformed path')
   }
 
-  const absolutePath = app.makePath('storage/uploads', normalizedPath)
+  const absolutePath = `./storage/uploads/${normalizedPath}`
   return response.download(absolutePath)
 })

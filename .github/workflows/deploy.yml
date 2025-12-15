@@ -26,7 +26,12 @@ jobs:
       - name: Install dependencies
         run: npm ci
       
-      - name: Run tests
+      - name: Run test
+        env:
+          APP_KEY: abcdefghijklmnopqrstuvwxyz123456
+          HOST: localhost
+          LOG_LEVEL: debug
+          SESSION_DRIVER: cookie
         run: node ace test
       
       - name: Deploy to server

@@ -1,0 +1,40 @@
+classDiagram
+
+    Annonce "1" --> "*" Messages
+    Annonce "1" --> "*" Avis
+    Utilisateur "1" --> "*" Aviss
+    Utilisateur "1" --> "*" Annonce
+    Messages "*" --> "1" Utilisateur
+    Messages "*" --> "1" Utilisateur
+    class Annonce{
+      +String id
+      +String durationType
+      +Double cost
+      +String title
+      +String description
+      +String category
+      +String location
+      +String imagePath
+      +Date created_at
+      +Date updated_at
+
+      +create()
+    }
+    class Utilisateur{
+      +String fullName
+      -String email
+      -String hashedPassword
+      +Date created_at
+      +Date updated_at
+
+      +login()
+      +logout()
+      +register()
+    }
+    class Messages{
+      +String contenu
+    }
+    class Avis {
+      +Double note
+      +String commentaire
+    }

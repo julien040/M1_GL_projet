@@ -71,7 +71,7 @@ export default class AnnoncesController {
     return response.redirect('/dashboard')
   }
 
-  async showAnnonce({ params, view, response }: HttpContext) {
+  async showAnnonce({ params, view, response, auth }: HttpContext) {
     const annonce = await Annonce.query()
       .preload('author')
       .preload('avis', (qb) => {
@@ -93,7 +93,18 @@ export default class AnnoncesController {
       ;(annonce as any).averageRating = '?'
     }
 
-    return view.render('pages/annonce', { annonce })
+    const userId = auth.user ? auth.user.id : -1
+
+    // Vérifier si l'utilisateur connecté a déjà laissé un avis
+    let hasAvisFromUser = false
+    for (const avis of annonce.avis) {
+      if (avis.userId === userId) {
+        hasAvisFromUser = true
+        break
+      }
+    }
+
+    return view.render('pages/annonce', { annonce, hasAvisFromUser })
   }
 
   async search({ request, view }: HttpContext) {
@@ -156,7 +167,7 @@ export default class AnnoncesController {
     })
   }
 
-  async newReviewPage({ params, view, response, auth }: HttpContext) {
+  async newReviewPage({ params, view, response }: HttpContext) {
     const annonce = await Annonce.query().where('id', params.id).first()
 
     if (!annonce) {

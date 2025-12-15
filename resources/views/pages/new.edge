@@ -159,8 +159,11 @@
           const selectedValue = event.target.value;
           if (selectedValue === "echange") {
             prixInput.style.display = "none";
+            // Marque le champ comme non requis
+            prixInput.querySelector("input").required = false;
           } else {
             prixInput.style.display = "flex";
+            prixInput.querySelector("input").required = true;
           }
         });
       </script>

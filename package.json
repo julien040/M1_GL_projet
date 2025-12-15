@@ -64,6 +64,7 @@
     "edge.js": "^6.2.1",
     "luxon": "^3.7.2",
     "reflect-metadata": "^0.2.2",
+    "resend": "^6.6.0",
     "tailwindcss": "^4.1.17"
   },
   "hotHook": {

@@ -44,7 +44,7 @@ export default class LoginController {
     }
   }
 
-  async register({ request, auth, response, view, session }: HttpContext) {
+  async register({ request, auth, response, view }: HttpContext) {
     try {
       /**
        * Step 1: Get user details from the request body

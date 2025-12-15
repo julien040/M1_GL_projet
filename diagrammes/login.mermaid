@@ -1,0 +1,16 @@
+sequenceDiagram
+    participant D as Base de données
+    participant S as Serveur
+    participant U as Utilisateur
+    
+    U ->>+ S: Envoie des identifiants de connexion
+    S ->>+ D: Requête de l'email, et du hash du mot de passe
+    D ->>- S: Renvoi des identifiants
+    Note over S:Comparaison du hash du mot de passe
+    alt Identifiant incorrect
+    S -->>+ U: Redirige vers la page de login
+    else Identifiant correct
+    S ->>+ D: Création d'une session dans la base de données
+    S -->> U: Ajout des cookies à la session
+    S -->>- U: Redirige vers le dashboard
+    end

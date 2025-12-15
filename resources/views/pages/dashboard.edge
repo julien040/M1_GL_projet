@@ -1,9 +1,9 @@
-@layout.app({ title: "Accueil" })
+@layout.app({ title: "Dashboard" })
   @slot('meta')
     <meta name="description" content="Indirent - Petites annonces entre particulier" />
   @endslot
   @slot('main')
-    <main>
+    <main class="pb-12">
       <h1 class="text-2xl stack-sans-headline mt-10">
         Bienvenue sur votre dashboard, {{ auth.user.fullName  }} !
       </h1>
@@ -74,6 +74,38 @@
             <p class="text-xs text-black/40 mt-2">
               Publiée le {{ annonce.createdAt.toFormat('dd/MM/yyyy') }}
             </p>
+          </a>
+        @end
+        
+      </div>
+      <h1 class="text-xl stack-sans-headline mt-6">
+        Vos récentes conversations
+      </h1>
+      <p class="text-sm text-black/60">
+        Suivez et gérez vos conversations récentes avec d'autres utilisateurs concernant vos annonces.
+      </p>
+      <div class="grid mt-4 gap-6 grid-cols-1 lg:grid-cols-2">
+        @each(conv in conversations)
+          <a
+            href="/dashboard/messagerie/{{ conv.annonceId }}/{{ conv.userId }}"
+            class="flex flex-col p-5 px-6 rounded-lg bg-white col-span-1"
+          >
+            <h2 class="text-[15px] font-semibold mb-1">
+              Conversation avec {{ conv.fullName }} sur l'annonce "{{ conv.annonceTitle }}"
+            </h2>
+            @if(conv.lastMessage)
+              <p class="text-sm text-black/70 mb-2">
+                Dernier message : "{{ conv.lastMessage.length > 50 ? conv.lastMessage.slice(0, 50) + '...' : conv.lastMessage }}"
+              </p>
+              <p class="text-xs text-black/40">
+                Envoyé le {{ conv.lastMessageDate }}
+              </p>
+            @else
+              <p class="text-sm text-black/70 mb-2">
+                Aucun message échangé pour le moment.
+              </p>
+            @end
+            
           </a>
         @end
         

@@ -6,6 +6,28 @@ Ce projet est une application web de gestion d'annonces pour l'UE Génie Logicie
 
 Le projet est hébergé sur [https://indirent.julienc.me](https://indirent.julienc.me). Vous pouvez y créer un compte, publier des annonces, et interagir avec d'autres utilisateurs.
 
+## Screenshots
+
+### Page d'accueil
+
+![Page d'accueil](screenshot/NnXRdKSq.png)
+
+### Page de création d'annonce
+
+![Page de création d'annonce](screenshot/I12YYUhQ.png)
+
+### Page d'annonce détaillée
+
+![Page d'annonce détaillée](screenshot/2mjICusG.png)
+
+### Page de messagerie
+
+![Page de messagerie](screenshot/Njbf5gpM.png)
+
+### Exemple de notification par email
+
+![Notification par email](screenshot/adUhpgU6.png)
+
 ### Utilisation locale
 
 Pour exécuter le projet en local, suivez les étapes suivantes :
@@ -23,7 +45,17 @@ Pour exécuter le projet en local, suivez les étapes suivantes :
    ```bash
    node ace serve --watch
    ```
-4. Ouvrir votre navigateur et accéder à `http://localhost:3333` 
+4. Ouvrir votre navigateur et accéder à `http://localhost:3333`.
+
+## Fonctionnalités
+
+- Inscription et connexion des utilisateurs
+- Création, consultation, recherche et filtrage des annonces
+- Envoi et gestion des demandes d'échange par la messagerie
+- Système d'avis et de notation
+- Notifications par email lors d'un nouveau message
+- Chiffrement des mots de passe pour la sécurité
+- Déploiement automatisé via CI/CD avec GitHub Actions
 
 ## Ingénierie des Exigences
 

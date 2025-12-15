@@ -50,7 +50,7 @@ export default defineConfig({
     () => import('@adonisjs/shield/shield_provider'),
     () => import('@adonisjs/static/static_provider'),
     () => import('@adonisjs/lucid/database_provider'),
-    () => import('@adonisjs/auth/auth_provider')
+    () => import('@adonisjs/auth/auth_provider'),
   ],
 
   /*
@@ -80,8 +80,8 @@ export default defineConfig({
         timeout: 2000,
       },
       {
-        files: ['tests/functional/**/*.spec(.ts|.js)'],
-        name: 'functional',
+        files: ['tests/fonctionnel/**/*.spec(.ts|.js)'],
+        name: 'fonctionnel',
         timeout: 30000,
       },
     ],

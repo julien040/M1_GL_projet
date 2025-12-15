@@ -99,11 +99,25 @@
         @end
       </div>
 
-      @if (auth.isAuthenticated && auth.user.id !== annonce.author.id)
-        <a href="/annonce/{{ annonce.id }}/newReview" class="block mt-8 button-link w-fit">
-          Ajouter un avis
-      </a>
-      @endif
+      <div class="flex gap-4">
+        @if (!auth.isAuthenticated)
+          <p class="mt-8 text-sm text-black/60">
+            <a href="/login" class="text-blue-600 underline">
+              Connectez-vous
+            </a>pour pouvoir laisser un avis ou contacter le vendeur.
+          </p>
+        @endif
+        @if (auth.isAuthenticated && auth.user.id !== annonce.author.id && !hasAvisFromUser)
+          <a href="/annonce/{{ annonce.id }}/newReview" class="block mt-8 button-link w-fit">
+            Ajouter un avis
+        </a>
+        @endif
+        @if (auth.isAuthenticated && auth.user.id !== annonce.author.id)
+          <a href="/annonce/{{ annonce.id }}/messagerie" class="block mt-8 button-link w-fit">
+            Envoyer un message au vendeur
+        </a>
+        @endif
+      </div>
     </main>
   @endslot
 @end

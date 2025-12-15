@@ -12,6 +12,14 @@ router.get('/logout', '#controllers/login_controller.logout').use(middleware.aut
 router
   .group(() => {
     router.get('/', '#controllers/dashboard_controller.index')
+    router.get(
+      '/messagerie/:annonceId/:userId',
+      '#controllers/messagerie_controller.conversationDashboard'
+    )
+    router.post(
+      '/messagerie/:annonceId/:userId/newMessage',
+      '#controllers/messagerie_controller.createMessageDashboard'
+    )
   })
   .prefix('/dashboard')
   .use(middleware.auth())
@@ -23,6 +31,12 @@ router
   .use(middleware.auth())
 router
   .post('/annonce/:id/newReview', '#controllers/annonces_controller.createReview')
+  .use(middleware.auth())
+router
+  .get('/annonce/:id/messagerie', '#controllers/messagerie_controller.conversation')
+  .use(middleware.auth())
+router
+  .post('/annonce/:id/newMessage', '#controllers/messagerie_controller.createMessageUser')
   .use(middleware.auth())
 router.get('/search', '#controllers/annonces_controller.search')
 

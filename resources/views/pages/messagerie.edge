@@ -1,0 +1,60 @@
+@layout.app({ title: "Messagerie avec "+ chatUser.fullName })
+  @slot('meta')
+    <meta name="description" content="Indirent - Petites annonces entre particulier" />
+  @endslot
+  @slot('main')
+    <main class="max-w-xl mx-auto max-h-[88vh] h-full">
+      <h1 class="text-2xl stack-sans-headline  mt-10">
+        Conversation avec {{ chatUser.fullName }}
+      </h1>
+      <p class="text-black/60 text-sm">
+        Pour l'annonce : <a href="/annonce/{{ annonce.id }}" class="hover:underline">{{ annonce.title }}</a>
+      </p>
+      <div id="messageContainer" class="flex flex-col mt-6 h-[79%] overflow-y-scroll gap-6 mb-2">
+        @each(message in messages)
+          <div
+            class="p-4 max-w-[90%] rounded-lg {{ message.senderId === chatUser.id ? 'bg-gray-200 self-start' : 'bg-blue-400 self-end' }}"
+          >
+            <p
+              class="h-fit font-medium  text-sm {{ message.senderId === chatUser.id ? 'text-start text-black' : 'text-end text-white' }}"
+            >
+              {{ message.contenu }}
+            </p>
+            <p
+              class="text-xs mt-2 text-right {{ message.senderId === chatUser.id ? 'text-black/30' : 'text-white/60' }}"
+            >
+              Envoyé le {{ message.createdAt.toFormat('dd/MM/yyyy à HH:mm') }}
+            </p>
+          </div>
+        @else
+          <p class=" text-black/60 text-sm text-center my-auto">
+            Aucun message dans cette conversation. Envoyez le premier message !
+          </p>
+        @endeach
+      </div>
+      <script>
+        // scroll à la fin du container de messages
+        const messageContainer = document.getElementById("messageContainer");
+
+        messageContainer.scrollTop = messageContainer.scrollHeight;
+      </script>
+      <p class="text-sm font-medium tracking-tight">
+        Envoyer un nouveau message :
+      </p>
+      <form action="/annonce/{{ annonce.id }}/newMessage" method="POST" class="flex gap-4 mt-2">
+        {{ csrfField() }}
+        <textarea
+          type="text"
+          name="content"
+          placeholder="Votre message..."
+          required
+          class="border-b-2 border-black/10 mb-6 p-1 pb-2 focus:outline-none focus:border-black/40 w-full text-sm font-normal"
+        ></textarea>
+        <button type="submit" class="button-link w-fit h-fit">
+          Envoyer
+        </button>
+      </form>
+    </main>
+  @endslot
+@end
+

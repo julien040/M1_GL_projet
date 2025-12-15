@@ -1,0 +1,29 @@
+---
+title: Parcours de l'utilisateur
+---
+stateDiagram-v2
+    state lookup <<choice>>
+    state fork_state <<fork>>
+    state join_state <<join>>
+    state "Recherche d'annonce" as R
+    state "Annonce trouvée" as T
+    state "Détails de l'annonce" as Annonce
+    state "Contact du vendeur" as Contact
+    state "Achat finalisé" as Achat
+    state "Envoie email notification" as Email
+    state "Notification app" as NotifApp
+    R --> lookup
+    
+    lookup --> lookup: Non trouvé
+    lookup --> T: Trouvé
+    
+
+    T --> Annonce
+    Annonce --> Contact
+    Contact --> fork_state
+    fork_state --> Email
+    fork_state --> NotifApp
+    Email --> join_state
+    NotifApp --> join_state
+    join_state --> Achat
+

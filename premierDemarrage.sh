@@ -9,6 +9,8 @@ SESSION_DRIVER=cookie > .env
 
 echo "Fichier .env cree avec succes."
 
+mkdir -p tmp
+mkdir -p storage/uploads
 
 npm install
 

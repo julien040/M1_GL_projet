@@ -26,6 +26,18 @@ jobs:
       - name: Install dependencies
         run: npm ci
       
+      - name: Create tmp folder for SQLite
+        run: mkdir -p tmp
+      
+      - name: Run migrations
+        env:
+          APP_KEY: abcdefghijklmnopqrstuvwxyz123456
+          HOST: localhost
+          LOG_LEVEL: debug
+          SESSION_DRIVER: cookie
+          NODE_ENV: test
+        run: node ace migration:run --force
+      
       - name: Run test
         env:
           APP_KEY: abcdefghijklmnopqrstuvwxyz123456

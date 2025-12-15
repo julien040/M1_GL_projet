@@ -1,7 +1,6 @@
 import router from '@adonisjs/core/services/router'
 import { middleware } from '#start/kernel'
 import { sep, normalize } from 'node:path'
-import app from '@adonisjs/core/services/app'
 
 router.on('/').render('pages/home')
 router.get('/login', '#controllers/login_controller.loginPage').use(middleware.guest())

@@ -1,6 +1,5 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import { cuid } from '@adonisjs/core/helpers'
-import app from '@adonisjs/core/services/app'
 import Annonce from '../models/annonce.js'
 import Avis from '../models/avis.js'
 

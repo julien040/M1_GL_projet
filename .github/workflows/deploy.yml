@@ -58,6 +58,7 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           script: |
             cd /root/conf/GL
+            nvm use node
             pm2 stop adonisjs-app
             git pull origin main
             npm ci

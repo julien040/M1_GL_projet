@@ -36,6 +36,7 @@ jobs:
           LOG_LEVEL: debug
           SESSION_DRIVER: cookie
           NODE_ENV: test
+          PORT: 101
         run: node ace migration:run --force
       
       - name: Run test
@@ -44,6 +45,8 @@ jobs:
           HOST: localhost
           LOG_LEVEL: debug
           SESSION_DRIVER: cookie
+          NODE_ENV: test
+          PORT: 101
         run: node ace test
       
       - name: Deploy to server

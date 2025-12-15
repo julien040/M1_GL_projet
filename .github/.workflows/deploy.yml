@@ -39,6 +39,8 @@ jobs:
           script: |
             cd /root/conf/GL
             pm2 stop adonisjs-app
+            git pull origin main
+            npm ci
             node ace build
             cd build
             npm ci --omit="dev"

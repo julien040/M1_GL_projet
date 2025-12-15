@@ -3,6 +3,8 @@ import { test } from '@japa/runner'
 import User from '#models/user'
 import hash from '@adonisjs/core/services/hash'
 import testUtils from '@adonisjs/core/services/test_utils'
+import Annonce from '../../app/models/annonce.js'
+import { randomInt } from 'node:crypto'
 
 test.group('User', (group) => {
   console.log('Début du groupe de tests User')
@@ -25,7 +27,7 @@ test.group('User', (group) => {
     await user.delete()
   })
 
-  /*test("Création d'annonce", async ({ assert }) => {
+  test("Création d'annonce", async ({ assert }) => {
     // Créer deux utilisateurs
     const author = await User.create({
       email: 'author@example.com',
@@ -33,7 +35,7 @@ test.group('User', (group) => {
       fullName: 'Jean Dupont',
     })
 
-    /* const sender = await User.create({
+    const sender = await User.create({
       email: 'sender@example.com',
       password: 'password123',
       fullName: 'Marie Martin',
@@ -50,9 +52,9 @@ test.group('User', (group) => {
     annonce.location = '75001'
     annonce.isActive = true
     annonce.imagePath = 'default.jpg'
-    await annonce.save() */
+    await annonce.save()
 
-  /* // Vérifier que l'annonce a bien été créée
+    // Vérifier que l'annonce a bien été créée
     assert.exists(annonce.id)
     assert.equal(annonce.authorId, author.id)
 
@@ -66,6 +68,7 @@ test.group('User', (group) => {
     const foundAnnonce = await Annonce.find(annonce.id)
     console.log('Found annonce:', foundAnnonce)
 
+    /*
     // Créer un message directement via raw query pour éviter les problèmes ORM
     await db.table('messages').insert({
       id: randomInt(1, 1000000),
@@ -96,11 +99,11 @@ test.group('User', (group) => {
 
     assert.lengthOf(messages, 1)
     assert.equal(messages[0].id, message.id) 
-
+    */
     // Clean up
     //await message?.delete()
-    //await annonce.delete()
-    //await sender.delete()
+    await annonce.delete()
+    await sender.delete()
     await author.delete()
-  })*/
+  })
 })

@@ -1,0 +1,46 @@
+name: Test et deploiement de l'application
+
+on:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: production-deployment
+  cancel-in-progress: false
+
+jobs:
+  test-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Run tests
+        run: node ace test
+      
+      - name: Deploy to server
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            cd /root/conf/GL
+            pm2 stop adonisjs-app
+            node ace build
+            cd build
+            npm ci --omit="dev"
+            cd ..
+            pm2 start adonisjs-app
